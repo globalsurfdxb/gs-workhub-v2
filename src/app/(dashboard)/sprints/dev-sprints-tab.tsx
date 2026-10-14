@@ -32,7 +32,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
-import { ProjectFilterStrip } from "@/components/project-filter-strip";
+import { SearchableProjectDropdown } from "@/components/searchable-project-dropdown";
 import { api, ApiError } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
 import {
@@ -892,7 +892,7 @@ export function DevSprintsTab({ teamId }: { teamId: string }) {
           <CardTitle>Projects</CardTitle>
         </CardHeader>
         <CardContent>
-          <ProjectFilterStrip
+          <SearchableProjectDropdown
             options={projectOptions.map((project) => ({
               id: project.id,
               name: project.name,

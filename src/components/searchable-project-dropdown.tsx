@@ -21,6 +21,8 @@ interface SearchableProjectDropdownProps {
   unitLabelPlural?: string;
   isLoading?: boolean;
   placeholder?: string;
+  /** Set false when callers have no real per-project count to show (e.g. a plain project picker) — omits the count badge instead of displaying a meaningless 0. Defaults to true. */
+  showCount?: boolean;
 }
 
 /**
@@ -37,6 +39,7 @@ export function SearchableProjectDropdown({
   unitLabelPlural,
   isLoading,
   placeholder = "All Projects",
+  showCount = true,
 }: SearchableProjectDropdownProps) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -122,7 +125,9 @@ export function SearchableProjectDropdown({
                 {activeId === "ALL" && <Check className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
                 <span className={cn(activeId !== "ALL" && "pl-[1.375rem]")}>{placeholder}</span>
               </span>
-              <span className="shrink-0 text-xs text-muted-foreground tabular-nums">{totalCount}</span>
+              {showCount && (
+                <span className="shrink-0 text-xs text-muted-foreground tabular-nums">{totalCount}</span>
+              )}
             </button>
 
             {filtered.length === 0 ? (
@@ -146,9 +151,11 @@ export function SearchableProjectDropdown({
                       {active && <Check className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
                       <span className={cn("truncate", !active && "pl-[1.375rem]")}>{option.name}</span>
                     </span>
-                    <span className="shrink-0 text-xs text-muted-foreground tabular-nums">
-                      {option.count} {option.count === 1 ? unitLabel : plural}
-                    </span>
+                    {showCount && (
+                      <span className="shrink-0 text-xs text-muted-foreground tabular-nums">
+                        {option.count} {option.count === 1 ? unitLabel : plural}
+                      </span>
+                    )}
                   </button>
                 );
               })

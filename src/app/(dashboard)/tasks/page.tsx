@@ -32,7 +32,7 @@ import {
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
-import { ProjectFilterStrip } from "@/components/project-filter-strip";
+import { SearchableProjectDropdown } from "@/components/searchable-project-dropdown";
 import { api, ApiError } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/store/auth-store";
@@ -424,7 +424,7 @@ export default function TasksPage() {
           <CardTitle>Projects</CardTitle>
         </CardHeader>
         <CardContent>
-          <ProjectFilterStrip
+          <SearchableProjectDropdown
             options={projectsWithTasks.map((project) => ({
               id: project.id,
               name: project.name,
@@ -435,11 +435,6 @@ export default function TasksPage() {
             totalCount={totalTaskCount}
             unitLabel="task"
             isLoading={projectsQuery.isLoading || allTasksQuery.isLoading}
-            emptyMessage={
-              assigneeScope === "me"
-                ? "You have no tasks assigned in any project yet."
-                : "No projects have tasks yet."
-            }
           />
         </CardContent>
       </Card>
